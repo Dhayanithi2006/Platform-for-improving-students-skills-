@@ -1,0 +1,313 @@
+{
+  "students": [
+    {
+      "id": "student_001",
+      "email": "demo@skilltwin.com",
+      "name": "Demo Student",
+      "class_level": "10th Grade",
+      "school": "SkillTwin Academy",
+      "subjects": ["Physics", "Mathematics", "Chemistry"],
+      "performance_history": [
+        {
+          "subject": "Physics",
+          "topic": "Thermodynamics",
+          "quiz_scores": [65, 70, 55, 80, 75],
+          "engagement_time": 120,
+          "last_activity": "2024-01-15T10:30:00",
+          "mastery": 65
+        },
+        {
+          "subject": "Physics",
+          "topic": "Optics",
+          "quiz_scores": [45, 50, 60, 55, 50],
+          "engagement_time": 90,
+          "last_activity": "2024-01-14T14:20:00",
+          "mastery": 45
+        },
+        {
+          "subject": "Physics",
+          "topic": "Mechanics",
+          "quiz_scores": [85, 80, 90, 85, 88],
+          "engagement_time": 180,
+          "last_activity": "2024-01-13T11:45:00",
+          "mastery": 80
+        },
+        {
+          "subject": "Mathematics",
+          "topic": "Calculus",
+          "quiz_scores": [70, 75, 65, 80, 70],
+          "engagement_time": 150,
+          "last_activity": "2024-01-12T16:10:00",
+          "mastery": 70
+        },
+        {
+          "subject": "Mathematics",
+          "topic": "Algebra",
+          "quiz_scores": [90, 85, 88, 92, 85],
+          "engagement_time": 100,
+          "last_activity": "2024-01-11T09:30:00",
+          "mastery": 85
+        },
+        {
+          "subject": "Chemistry",
+          "topic": "Organic Chemistry",
+          "quiz_scores": [55, 60, 50, 65, 55],
+          "engagement_time": 110,
+          "last_activity": "2024-01-10T15:45:00",
+          "mastery": 55
+        }
+      ],
+      "mock_tests": [
+        {
+          "id": "test_001",
+          "subject": "Physics",
+          "score": 75,
+          "date": "2024-01-14",
+          "duration": "45 minutes",
+          "weak_areas": ["Thermodynamics", "Optics"]
+        },
+        {
+          "id": "test_002",
+          "subject": "Mathematics",
+          "score": 82,
+          "date": "2024-01-12",
+          "duration": "60 minutes",
+          "weak_areas": ["Calculus"]
+        }
+      ],
+      "upcoming_exams": [
+        {
+          "subject": "Physics",
+          "date": "2024-06-15",
+          "topic": "Unit 3: Thermodynamics",
+          "importance": "high",
+          "preparation_status": "in_progress"
+        },
+        {
+          "subject": "Mathematics",
+          "date": "2024-06-20",
+          "topic": "Calculus Integration",
+          "importance": "medium",
+          "preparation_status": "not_started"
+        }
+      ]
+    },
+    {
+      "id": "student_002",
+      "email": "alice@example.com",
+      "name": "Alice Johnson",
+      "class_level": "11th Grade",
+      "school": "Science Academy",
+      "subjects": ["Physics", "Chemistry", "Biology"],
+      "performance_history": [
+        {
+          "subject": "Physics",
+          "topic": "Thermodynamics",
+          "quiz_scores": [80, 85, 75, 90, 85],
+          "engagement_time": 200,
+          "last_activity": "2024-01-15T09:00:00",
+          "mastery": 85
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q001",
+      "subject": "Physics",
+      "topic": "Thermodynamics",
+      "difficulty": "medium",
+      "question_text": "Calculate the work done in an isothermal expansion of an ideal gas from volume V1 to V2 at temperature T.",
+      "options": ["nRT ln(V2/V1)", "PΔV", "nCvΔT", "Zero"],
+      "correct_answer": "A",
+      "explanation": "For isothermal expansion of ideal gas, work done = nRT ln(V2/V1) where n is number of moles, R is gas constant, T is temperature.",
+      "marks": 3
+    },
+    {
+      "id": "Q002",
+      "subject": "Physics",
+      "topic": "Thermodynamics",
+      "difficulty": "easy",
+      "question_text": "Which law of thermodynamics states that energy cannot be created or destroyed?",
+      "options": ["Zeroth Law", "First Law", "Second Law", "Third Law"],
+      "correct_answer": "B",
+      "explanation": "First Law of Thermodynamics: ΔU = Q - W, where ΔU is change in internal energy, Q is heat added, W is work done.",
+      "marks": 1
+    },
+    {
+      "id": "Q003",
+      "subject": "Physics",
+      "topic": "Optics",
+      "difficulty": "easy",
+      "question_text": "What is the formula for focal length of a spherical mirror?",
+      "options": ["1/f = 1/u + 1/v", "f = R/2", "f = 2R", "f = 1/R"],
+      "correct_answer": "B",
+      "explanation": "For spherical mirrors, focal length f = R/2 where R is radius of curvature.",
+      "marks": 2
+    },
+    {
+      "id": "Q004",
+      "subject": "Physics",
+      "topic": "Optics",
+      "difficulty": "medium",
+      "question_text": "A convex lens of focal length 20cm is placed in contact with a concave lens of focal length -30cm. What is the power of combination?",
+      "options": ["-1.67 D", "1.67 D", "0.83 D", "-0.83 D"],
+      "correct_answer": "A",
+      "explanation": "Power P = 1/f (in meters). P1 = 1/0.2 = 5D, P2 = 1/(-0.3) = -3.33D. Combined power = 5 - 3.33 = 1.67D.",
+      "marks": 3
+    },
+    {
+      "id": "Q005",
+      "subject": "Physics",
+      "topic": "Mechanics",
+      "difficulty": "medium",
+      "question_text": "A ball is thrown vertically upward with velocity 20 m/s. What maximum height will it reach? (g = 10 m/s²)",
+      "options": ["10 m", "20 m", "30 m", "40 m"],
+      "correct_answer": "B",
+      "explanation": "Using v² = u² - 2gh, at max height v = 0. So h = u²/2g = (20)²/(2*10) = 20 m.",
+      "marks": 3
+    },
+    {
+      "id": "Q006",
+      "subject": "Mathematics",
+      "topic": "Calculus",
+      "difficulty": "hard",
+      "question_text": "Find the derivative of f(x) = x³ sin(x)",
+      "options": ["3x² sin(x) + x³ cos(x)", "3x² cos(x)", "x³ cos(x)", "3x² sin(x) - x³ cos(x)"],
+      "correct_answer": "A",
+      "explanation": "Using product rule: d(uv)/dx = u'v + uv'. Here u = x³, v = sin(x). So f'(x) = 3x² sin(x) + x³ cos(x).",
+      "marks": 4
+    },
+    {
+      "id": "Q007",
+      "subject": "Mathematics",
+      "topic": "Algebra",
+      "difficulty": "easy",
+      "question_text": "Solve for x: 2x + 5 = 15",
+      "options": ["x = 5", "x = 10", "x = 7.5", "x = 20"],
+      "correct_answer": "A",
+      "explanation": "2x + 5 = 15 → 2x = 10 → x = 5",
+      "marks": 1
+    },
+    {
+      "id": "Q008",
+      "subject": "Chemistry",
+      "topic": "Organic Chemistry",
+      "difficulty": "medium",
+      "question_text": "Which compound exhibits geometrical isomerism?",
+      "options": ["But-1-ene", "But-2-ene", "Propene", "Ethene"],
+      "correct_answer": "B",
+      "explanation": "But-2-ene exhibits geometrical isomerism due to restricted rotation around double bond and different groups on both carbons.",
+      "marks": 2
+    },
+    {
+      "id": "Q009",
+      "subject": "Chemistry",
+      "topic": "Physical Chemistry",
+      "difficulty": "hard",
+      "question_text": "Calculate pH of 0.01M HCl solution.",
+      "options": ["1", "2", "3", "4"],
+      "correct_answer": "B",
+      "explanation": "HCl is strong acid, completely dissociates. [H+] = 0.01M = 10⁻² M. pH = -log[H+] = -log(10⁻²) = 2.",
+      "marks": 3
+    },
+    {
+      "id": "Q010",
+      "subject": "Physics",
+      "topic": "Modern Physics",
+      "difficulty": "hard",
+      "question_text": "Calculate de Broglie wavelength of electron accelerated through 100V.",
+      "options": ["1.23 Å", "12.3 Å", "0.123 Å", "123 Å"],
+      "correct_answer": "A",
+      "explanation": "λ = h/√(2meV) = 12.27/√V Å = 12.27/√100 = 1.227 Å ≈ 1.23 Å.",
+      "marks": 4
+    }
+  ],
+  "question_papers": [
+    {
+      "id": "paper_001",
+      "subject": "Physics",
+      "title": "Mid Term Examination - Physics",
+      "year": 2023,
+      "total_marks": 70,
+      "duration": "3 hours",
+      "topics": ["Thermodynamics", "Optics", "Mechanics", "Modern Physics"],
+      "difficulty_distribution": {
+        "easy": 40,
+        "medium": 40,
+        "hard": 20
+      },
+      "sample_questions": [
+        "Define entropy. (2 marks)",
+        "State First Law of Thermodynamics. (2 marks)",
+        "Calculate work done in isothermal expansion. (3 marks)",
+        "Explain photoelectric effect. (5 marks)"
+      ]
+    },
+    {
+      "id": "paper_002",
+      "subject": "Mathematics",
+      "title": "Final Examination - Mathematics",
+      "year": 2023,
+      "total_marks": 100,
+      "duration": "3 hours",
+      "topics": ["Calculus", "Algebra", "Geometry", "Trigonometry"],
+      "difficulty_distribution": {
+        "easy": 30,
+        "medium": 50,
+        "hard": 20
+      },
+      "sample_questions": [
+        "Differentiate x² sin(x). (3 marks)",
+        "Solve quadratic equation. (4 marks)",
+        "Find area under curve. (6 marks)",
+        "Prove trigonometric identity. (5 marks)"
+      ]
+    }
+  ],
+  "learning_resources": [
+    {
+      "id": "resource_001",
+      "type": "video",
+      "subject": "Physics",
+      "topic": "Thermodynamics",
+      "title": "Thermodynamics Explained in 15 Minutes",
+      "duration": "15:30",
+      "url": "https://youtube.com/watch?v=thermo_physics",
+      "difficulty": "beginner",
+      "tags": ["laws", "entropy", "heat engine"]
+    },
+    {
+      "id": "resource_002",
+      "type": "notes",
+      "subject": "Physics",
+      "topic": "Optics",
+      "title": "Optics Formula Sheet",
+      "pages": 3,
+      "format": "PDF",
+      "url": "/resources/optics_formulas.pdf",
+      "tags": ["lens formula", "mirror", "refraction"]
+    },
+    {
+      "id": "resource_003",
+      "type": "quiz",
+      "subject": "Mathematics",
+      "topic": "Calculus",
+      "title": "Calculus Practice Quiz",
+      "questions": 10,
+      "duration": "20 minutes",
+      "difficulty": "intermediate",
+      "tags": ["derivatives", "integration", "limits"]
+    }
+  ],
+  "performance_metrics": {
+    "engagement_score_formula": "(time_spent * 0.4 + activity_count * 0.3 + variety_score * 0.3)",
+    "mastery_calculation": "(quiz_scores_avg * 0.6 + practice_score * 0.4)",
+    "prediction_features": ["weekly_engagement", "quiz_avg", "topic_mastery_avg", "consistency_score"],
+    "risk_thresholds": {
+      "high_risk": "< 60",
+      "medium_risk": "60-80",
+      "low_risk": "> 80"
+    }
+  }
+}
