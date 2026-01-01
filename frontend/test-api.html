@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SkillTwin Test</title>
+</head>
+<body>
+    <h1>SkillTwin Backend Test</h1>
+    <button onclick="testAPI()">Test API Connection</button>
+    <div id="result"></div>
+
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                // Test login
+                const loginResponse = await fetch('http://localhost:5000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'demo@skilltwin.com',
+                        password: 'demo123'
+                    })
+                });
+                
+                const loginData = await loginResponse.json();
+                
+                if (loginData.success) {
+                    resultDiv.innerHTML = `
+                        <h3>✅ Backend API Working!</h3>
+                        <p>Login successful for: ${loginData.user.name}</p>
+                        <p>User ID: ${loginData.user.id}</p>
+                        <p>Email: ${loginData.user.email}</p>
+                    `;
+                    
+                    // Test dashboard
+                    const dashboardResponse = await fetch(`http://localhost:5000/api/dashboard/${loginData.user.id}`);
+                    const dashboardData = await dashboardResponse.json();
+                    
+                    if (dashboardData.success) {
+                        resultDiv.innerHTML += `<h3>✅ Dashboard API Working!</h3>`;
+                    }
+                } else {
+                    resultDiv.innerHTML = `<h3>❌ Login Failed</h3><p>${loginData.error}</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<h3>❌ Connection Error</h3><p>${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

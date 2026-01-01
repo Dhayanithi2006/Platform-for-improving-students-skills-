@@ -7,11 +7,28 @@ import sys
 import uuid
 import json
 from datetime import datetime
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, Response, request, jsonify, send_from_directory
+from flask.wrappers import Response
+from flask.wrappers import Response
+from flask.wrappers import Response
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 from dotenv import load_dotenv
 import tempfile
+
+from sqlalchemy.orm.relationships import RelationshipProperty
+
+from sqlalchemy.orm.relationships import RelationshipProperty
+
+from sqlalchemy.orm.relationships import RelationshipProperty
+
+from sqlalchemy.orm.relationships import RelationshipProperty
+
+from sqlalchemy.orm.relationships import RelationshipProperty
+
+from werkzeug.datastructures.file_storage import FileStorage
+from typing import Any, Literal
 
 # Load environment variables
 load_dotenv()
@@ -37,14 +54,14 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload
 db = SQLAlchemy(app)
 
 # Allowed file extensions
-ALLOWED_EXTENSIONS = {'pdf', 'txt'}
+ALLOWED_EXTENSIONS: set[str] = {'pdf', 'txt'}
 
-def allowed_file(filename):
+def allowed_file(filename) -> bool:
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # ============ DATABASE MODELS ============
 class Student(db.Model):
-    __tablename__ = 'students'
+    __tablename__: str = 'students'
     
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     email = db.Column(db.String(255), unique=True, nullable=False)
@@ -73,7 +90,7 @@ class Student(db.Model):
         }
 
 class Topic(db.Model):
-    __tablename__ = 'topics'
+    __tablename__: str = 'topics'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     subject = db.Column(db.String(100), nullable=False)
@@ -93,7 +110,7 @@ class Topic(db.Model):
         }
 
 class StudentPerformance(db.Model):
-    __tablename__ = 'student_performance'
+    __tablename__: str = 'student_performance'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     student_id = db.Column(db.String(36), db.ForeignKey('students.id', ondelete='CASCADE'), nullable=False)
@@ -120,7 +137,7 @@ class StudentPerformance(db.Model):
         }
 
 class MockTest(db.Model):
-    __tablename__ = 'mock_tests'
+    __tablename__: str = 'mock_tests'
     
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     student_id = db.Column(db.String(36), db.ForeignKey('students.id', ondelete='CASCADE'), nullable=False)
@@ -153,7 +170,7 @@ class MockTest(db.Model):
         }
 
 class Question(db.Model):
-    __tablename__ = 'questions'
+    __tablename__: str = 'questions'
     
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     subject = db.Column(db.String(100), nullable=False)
@@ -181,7 +198,7 @@ class Question(db.Model):
         }
 
 class StudentActivity(db.Model):
-    __tablename__ = 'student_activities'
+    __tablename__: str = 'student_activities'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     student_id = db.Column(db.String(36), db.ForeignKey('students.id', ondelete='CASCADE'), nullable=False)
@@ -203,7 +220,7 @@ class StudentActivity(db.Model):
         }
 
 class PaperAnalysis(db.Model):
-    __tablename__ = 'paper_analyses'
+    __tablename__: str = 'paper_analyses'
     
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     student_id = db.Column(db.String(36), db.ForeignKey('students.id', ondelete='CASCADE'))
@@ -225,7 +242,7 @@ class PaperAnalysis(db.Model):
         }
 
 # ============ HELPER FUNCTIONS ============
-def seed_sample_data():
+def seed_sample_data() -> bool:
     """Seed database with sample data"""
     try:
         # Check if demo student already exists
@@ -248,7 +265,7 @@ def seed_sample_data():
         db.session.flush()
         
         # Create sample topics
-        topics = [
+        topics: list[Topic] = [
             Topic(subject="Physics", topic_name="Thermodynamics", difficulty_level=3),
             Topic(subject="Physics", topic_name="Optics", difficulty_level=2),
             Topic(subject="Physics", topic_name="Mechanics", difficulty_level=2),
@@ -262,7 +279,7 @@ def seed_sample_data():
         db.session.flush()
         
         # Create performance data
-        performances = [
+        performances: list[StudentPerformance] = [
             StudentPerformance(
                 student_id=demo_student.id,
                 topic_id=topics[0].id,  # Thermodynamics
@@ -301,7 +318,7 @@ def seed_sample_data():
             db.session.add(perf)
         
         # Create sample questions
-        questions = [
+        questions: list[Question] = [
             Question(
                 id="Q001",
                 subject="Physics",
@@ -352,7 +369,7 @@ def seed_sample_data():
             db.session.add(question)
         
         # Create sample activities
-        activities = [
+        activities: list[StudentActivity] = [
             StudentActivity(
                 student_id=demo_student.id,
                 activity_type="test_completed",
@@ -389,7 +406,7 @@ def seed_sample_data():
 class SimplePredictor:
     """Simple performance predictor without numpy/scikit-learn"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         pass
     
     def predict(self, student_data):
@@ -399,12 +416,12 @@ class SimplePredictor:
         
         # Simple linear prediction
         base_score = avg_mastery * 0.8 + engagement * 20
-        base_score = max(0, min(100, base_score))
+        base_score: int = max(0, min(100, base_score))
         
         # Add some randomness
         import random
-        variation = random.uniform(-5, 5)
-        predicted_score = base_score + variation
+        variation: float = random.uniform(-5, 5)
+        predicted_score: float = base_score + variation
         
         return {
             'predicted_score': round(predicted_score, 1),
@@ -415,7 +432,7 @@ class SimplePredictor:
             'confidence': round(85 + random.uniform(-10, 10), 1)
         }
     
-    def assess_risk(self, predicted_score):
+    def assess_risk(self, predicted_score) -> str:
         """Assess risk level"""
         if predicted_score >= 80:
             return 'low'
@@ -427,29 +444,29 @@ class SimplePredictor:
 class SimpleAdaptiveEngine:
     """Simple adaptive test engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ability_estimate = 0.5
         self.consecutive_correct = 0
         self.consecutive_wrong = 0
     
-    def get_next_difficulty(self, previous_correct, response_time=30):
+    def get_next_difficulty(self, previous_correct, response_time=30) -> str:
         """Determine next question difficulty"""
         learning_rate = 0.15
         
         if previous_correct:
-            self.ability_estimate = min(1, self.ability_estimate + learning_rate)
+            self.ability_estimate: float = min(1, self.ability_estimate + learning_rate)
             self.consecutive_correct += 1
             self.consecutive_wrong = 0
         else:
-            self.ability_estimate = max(0, self.ability_estimate - learning_rate)
+            self.ability_estimate: float = max(0, self.ability_estimate - learning_rate)
             self.consecutive_wrong += 1
             self.consecutive_correct = 0
         
         # Adjust for streaks
         if self.consecutive_correct >= 3:
-            self.ability_estimate = min(1, self.ability_estimate + 0.1)
+            self.ability_estimate: float = min(1, self.ability_estimate + 0.1)
         elif self.consecutive_wrong >= 3:
-            self.ability_estimate = max(0, self.ability_estimate - 0.1)
+            self.ability_estimate: float = max(0, self.ability_estimate - 0.1)
         
         # Select difficulty
         if self.ability_estimate < 0.3:
@@ -459,7 +476,7 @@ class SimpleAdaptiveEngine:
         else:
             return 'hard'
     
-    def reset(self):
+    def reset(self) -> None:
         """Reset engine state"""
         self.ability_estimate = 0.5
         self.consecutive_correct = 0
@@ -471,7 +488,7 @@ adaptive_engine = SimpleAdaptiveEngine()
 
 # ============ AUTHENTICATION ROUTES ============
 @app.route('/api/auth/login', methods=['POST'])
-def login():
+def login() -> tuple[Response, Literal[400]] | Response | tuple[Response, Literal[500]]:
     """User login endpoint"""
     try:
         data = request.json
@@ -510,7 +527,7 @@ def login():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/auth/register', methods=['POST'])
-def register():
+def register() -> tuple[Response, Literal[400]] | tuple[Response, Literal[409]] | Response | tuple[Response, Literal[500]]:
     """User registration endpoint"""
     try:
         data = request.json
@@ -543,13 +560,13 @@ def register():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/auth/logout', methods=['POST'])
-def logout():
+def logout() -> Response:
     """User logout endpoint"""
     return jsonify({'success': True, 'message': 'Logged out successfully'})
 
 # ============ STUDENT DASHBOARD ROUTES ============
 @app.route('/api/dashboard/<student_id>', methods=['GET'])
-def get_dashboard(student_id):
+def get_dashboard(student_id) -> tuple[Response, Literal[404]] | Response | tuple[Response, Literal[500]]:
     """Get comprehensive dashboard data"""
     try:
         student = Student.query.get(student_id)
@@ -561,10 +578,10 @@ def get_dashboard(student_id):
         
         # Calculate overall stats
         if performances:
-            overall_mastery = sum(p.mastery_score for p in performances) / len(performances)
-            total_questions = sum(p.questions_attempted for p in performances)
-            correct_answers = sum(p.questions_correct for p in performances)
-            total_time = sum(p.total_time_spent for p in performances) / 60
+            overall_mastery: float = sum(p.mastery_score for p in performances) / len(performances)
+            total_questions: int = sum(p.questions_attempted for p in performances)
+            correct_answers: int = sum(p.questions_correct for p in performances)
+            total_time: float = sum(p.total_time_spent for p in performances) / 60
         else:
             overall_mastery = 0
             total_questions = 0
@@ -582,7 +599,7 @@ def get_dashboard(student_id):
             .limit(3).all()
         
         # Get weak topics
-        weak_topics = sorted(performances, key=lambda x: x.mastery_score)[:3] if performances else []
+        weak_topics: list[Any] = sorted(performances, key=lambda x: x.mastery_score)[:3] if performances else []
         
         return jsonify({
             'success': True,
@@ -643,7 +660,7 @@ def get_dashboard(student_id):
 
 # ============ PERFORMANCE PREDICTION ROUTES ============
 @app.route('/api/performance/predict/<student_id>', methods=['GET'])
-def predict_performance(student_id):
+def predict_performance(student_id) -> tuple[Response, Literal[404]] | Response | tuple[Response, Literal[500]]:
     """Get performance prediction for student"""
     try:
         student = Student.query.get(student_id)
@@ -666,10 +683,10 @@ def predict_performance(student_id):
         prediction = predictor.predict(student_data)
         
         # Get weak topics
-        weak_topics = sorted(performances, key=lambda x: x.mastery_score)[:3] if performances else []
+        weak_topics: list[Any] = sorted(performances, key=lambda x: x.mastery_score)[:3] if performances else []
         
         # Generate recommendations
-        recommendations = [
+        recommendations: list[str] = [
             f"Focus on {weak_topics[0].topic.topic_name if weak_topics else 'key topics'} for 30 minutes daily",
             "Take adaptive mock test on weak topics",
             "Review summarized notes for difficult concepts",
@@ -702,7 +719,7 @@ def predict_performance(student_id):
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/performance/update', methods=['POST'])
-def update_performance():
+def update_performance() -> tuple[Response, Literal[400]] | tuple[Response, Literal[404]] | Response | tuple[Response, Literal[500]]:
     """Update student performance after activity"""
     try:
         data = request.json
@@ -742,7 +759,7 @@ def update_performance():
             performance.questions_correct += 1
         
         # Calculate new mastery score
-        accuracy = performance.questions_correct / performance.questions_attempted if performance.questions_attempted > 0 else 0
+        accuracy: os.Any | int = performance.questions_correct / performance.questions_attempted if performance.questions_attempted > 0 else 0
         performance.mastery_score = round(accuracy * 100, 2)
         
         # Update time spent
@@ -771,7 +788,7 @@ def update_performance():
 
 # ============ ADAPTIVE TEST ROUTES ============
 @app.route('/api/tests/adaptive/start', methods=['POST'])
-def start_adaptive_test():
+def start_adaptive_test() -> tuple[Response, Literal[400]] | Response | tuple[Response, Literal[500]]:
     """Start an adaptive test"""
     try:
         data = request.json
@@ -845,7 +862,7 @@ def start_adaptive_test():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/tests/adaptive/submit', methods=['POST'])
-def submit_adaptive_answer():
+def submit_adaptive_answer() -> tuple[Response, Literal[400]] | tuple[Response, Literal[404]] | Response | tuple[Response, Literal[500]]:
     """Submit answer and get next question"""
     try:
         data = request.json
@@ -883,11 +900,11 @@ def submit_adaptive_answer():
         })
         
         # Update ability estimate and get next difficulty
-        next_difficulty = adaptive_engine.get_next_difficulty(is_correct, response_time)
+        next_difficulty: str = adaptive_engine.get_next_difficulty(is_correct, response_time)
         
         # Check if test is complete
-        questions_completed = len(test.answers)
-        test_completed = questions_completed >= 10
+        questions_completed: int = len(test.answers)
+        test_completed: bool = questions_completed >= 10
         
         next_question = None
         if not test_completed:
@@ -899,8 +916,8 @@ def submit_adaptive_answer():
             
             # If no question at that difficulty, get closest
             if not next_question:
-                difficulties = ['easy', 'medium', 'hard']
-                current_idx = difficulties.index(next_difficulty) if next_difficulty in difficulties else 1
+                difficulties: list[str] = ['easy', 'medium', 'hard']
+                current_idx: int = difficulties.index(next_difficulty) if next_difficulty in difficulties else 1
                 
                 # Try adjacent difficulties
                 for offset in [0, 1, -1, 2, -2]:
@@ -924,7 +941,7 @@ def submit_adaptive_answer():
             test.time_taken = sum(a.get('response_time', 0) for a in test.answers)
             
             # Calculate score
-            correct_answers = sum(1 for a in test.answers if a.get('correct', False))
+            correct_answers: int = sum(1 for a in test.answers if a.get('correct', False))
             test.total_score = (correct_answers / len(test.answers)) * 100 if test.answers else 0
             
             # Update performance
@@ -963,7 +980,7 @@ def submit_adaptive_answer():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/tests/history/<student_id>', methods=['GET'])
-def get_test_history(student_id):
+def get_test_history(student_id) -> Response | tuple[Response, Literal[500]]:
     """Get test history for student"""
     try:
         tests = MockTest.query.filter_by(student_id=student_id)\
@@ -979,14 +996,14 @@ def get_test_history(student_id):
 
 # ============ PAPER ANALYSIS ROUTES ============
 @app.route('/api/papers/upload', methods=['POST'])
-def upload_and_analyze_paper():
+def upload_and_analyze_paper() -> tuple[Response, Literal[400]] | Response | tuple[Response, Literal[500]]:
     """Upload and analyze question paper"""
     try:
         if 'file' not in request.files:
             return jsonify({'success': False, 'error': 'No file provided'}), 400
         
-        file = request.files['file']
-        student_id = request.form.get('student_id')
+        file: FileStorage = request.files['file']
+        student_id: str | None = request.form.get('student_id')
         
         if file.filename == '':
             return jsonify({'success': False, 'error': 'No file selected'}), 400
@@ -1121,7 +1138,7 @@ def upload_and_analyze_paper():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/papers/quick-analyze', methods=['POST'])
-def quick_analyze_paper():
+def quick_analyze_paper() -> tuple[Response, Literal[400]] | Response | tuple[Response, Literal[500]]:
     """Analyze paper from text content"""
     try:
         data = request.json
@@ -1132,7 +1149,7 @@ def quick_analyze_paper():
             return jsonify({'success': False, 'error': 'No paper text provided'}), 400
         
         # Simple analysis based on text
-        subject = 'Physics' if 'physics' in paper_text.lower() else 'Mathematics' if 'mathematics' in paper_text.lower() else 'General'
+        subject: str = 'Physics' if 'physics' in paper_text.lower() else 'Mathematics' if 'mathematics' in paper_text.lower() else 'General'
         
         analysis = {
             'metadata': {
@@ -1215,7 +1232,7 @@ def quick_analyze_paper():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/papers/sample-analysis', methods=['GET'])
-def get_sample_analysis():
+def get_sample_analysis() -> Response | tuple[Response, Literal[500]]:
     """Get sample analysis for demo purposes"""
     try:
         analysis = {
@@ -1271,7 +1288,7 @@ def get_sample_analysis():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/papers/history/<student_id>', methods=['GET'])
-def get_paper_history(student_id):
+def get_paper_history(student_id) -> Response | tuple[Response, Literal[500]]:
     """Get paper analysis history for student"""
     try:
         analyses = PaperAnalysis.query.filter_by(student_id=student_id)\
@@ -1293,12 +1310,12 @@ def get_paper_history(student_id):
 
 # ============ LEARNING RECOMMENDATIONS ROUTES ============
 @app.route('/api/recommendations/<student_id>', methods=['GET'])
-def get_recommendations(student_id):
+def get_recommendations(student_id) -> Response | tuple[Response, Literal[500]]:
     """Get personalized learning recommendations"""
     try:
         # Get weak topics
         performances = StudentPerformance.query.filter_by(student_id=student_id).all()
-        weak_topics = sorted(performances, key=lambda x: x.mastery_score)[:3] if performances else []
+        weak_topics: list[Any] = sorted(performances, key=lambda x: x.mastery_score)[:3] if performances else []
         
         recommendations = []
         
@@ -1380,10 +1397,10 @@ def get_recommendations(student_id):
 
 # ============ TOPICS & QUESTIONS ROUTES ============
 @app.route('/api/topics', methods=['GET'])
-def get_topics():
+def get_topics() -> Response | tuple[Response, Literal[500]]:
     """Get all topics with optional filtering"""
     try:
-        subject = request.args.get('subject')
+        subject: str | None = request.args.get('subject')
         
         query = Topic.query
         if subject:
@@ -1399,12 +1416,12 @@ def get_topics():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/questions', methods=['GET'])
-def get_questions():
+def get_questions() -> Response | tuple[Response, Literal[500]]:
     """Get questions with optional filtering"""
     try:
-        subject = request.args.get('subject')
-        topic = request.args.get('topic')
-        difficulty = request.args.get('difficulty')
+        subject: str | None = request.args.get('subject')
+        topic: str | None = request.args.get('topic')
+        difficulty: str | None = request.args.get('difficulty')
         limit = int(request.args.get('limit', 10))
         
         query = Question.query
@@ -1427,11 +1444,11 @@ def get_questions():
 
 # ============ ACTIVITIES ROUTES ============
 @app.route('/api/activities/<student_id>', methods=['GET'])
-def get_activities(student_id):
+def get_activities(student_id) -> Response | tuple[Response, Literal[500]]:
     """Get student activities"""
     try:
         limit = int(request.args.get('limit', 20))
-        activity_type = request.args.get('type')
+        activity_type: str | None = request.args.get('type')
         
         query = StudentActivity.query.filter_by(student_id=student_id)
         if activity_type:
@@ -1448,18 +1465,29 @@ def get_activities(student_id):
 
 # ============ HEALTH & UTILITY ROUTES ============
 @app.route('/api/health', methods=['GET'])
-def health_check():
+def health_check() -> Response:
     """Health check endpoint"""
+    print("DEBUG: health_check called")
+    # Use a safe command to verify DB connectivity (SQLAlchemy 2.x compatible)
+    db_status = 'disconnected'
+    try:
+        # Attempt a lightweight query
+        db.session.execute(text('SELECT 1'))
+        db_status = 'connected'
+    except Exception as e:
+        print("DEBUG: health_check db exception:", repr(e))
+        db_status = 'disconnected'
+
     return jsonify({
-        'status': 'healthy',
+        'status': 'healthy' if db_status == 'connected' else 'degraded',
         'timestamp': datetime.utcnow().isoformat(),
         'version': '1.0.0',
         'service': 'SkillTwin Backend API',
-        'database': 'connected' if db.session.query('1').first() else 'disconnected'
+        'database': db_status
     })
 
 @app.route('/api/init', methods=['POST'])
-def initialize_database():
+def initialize_database() -> Response | tuple[Response, Literal[500]]:
     """Initialize database with sample data"""
     try:
         with app.app_context():
@@ -1474,7 +1502,7 @@ def initialize_database():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/reset', methods=['POST'])
-def reset_database():
+def reset_database() -> Response | tuple[Response, Literal[500]]:
     """Reset database (for development only)"""
     try:
         with app.app_context():
@@ -1494,21 +1522,45 @@ def reset_database():
 
 # ============ STATIC FILES ============
 @app.route('/uploads/<filename>')
-def uploaded_file(filename):
+def uploaded_file(filename) -> Response:
     """Serve uploaded files"""
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+# ============ FRONTEND STATIC SERVE ============
+# Absolute build dir used to serve static files
+BUILD_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend', 'build'))
+
+@app.route('/')
+def serve_root() -> Response:
+    """Serve index.html directly"""
+    index_path = os.path.join(BUILD_DIR, 'index.html')
+    if os.path.exists(index_path):
+        return send_from_directory(BUILD_DIR, 'index.html')
+    return jsonify({'error': 'Frontend build not found', 'success': False}), 404
+
+@app.route('/<path:path>')
+def serve_frontend(path) -> Response:
+    """Serve the React production build files"""
+    requested = os.path.join(BUILD_DIR, path)
+    if os.path.exists(requested) and os.path.isfile(requested):
+        return send_from_directory(BUILD_DIR, path)
+    # fallback to index.html for client-side routes
+    index_path = os.path.join(BUILD_DIR, 'index.html')
+    if os.path.exists(index_path):
+        return send_from_directory(BUILD_DIR, 'index.html')
+    return jsonify({'error': 'Resource not found', 'success': False}), 404
+
 # ============ ERROR HANDLERS ============
 @app.errorhandler(404)
-def not_found(error):
+def not_found(error) -> tuple[Response, Literal[404]]:
     return jsonify({'success': False, 'error': 'Resource not found'}), 404
 
 @app.errorhandler(500)
-def internal_error(error):
+def internal_error(error) -> tuple[Response, Literal[500]]:
     return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 @app.errorhandler(413)
-def request_entity_too_large(error):
+def request_entity_too_large(error) -> tuple[Response, Literal[413]]:
     return jsonify({'success': False, 'error': 'File too large. Maximum size is 16MB'}), 413
 
 # ============ MAIN APPLICATION ============
@@ -1547,4 +1599,4 @@ Server running on http://localhost:5000
 {'='*60}
 """)
     
-    app.run(debug=True, port=5000, host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
